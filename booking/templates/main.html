@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex flex-row justify-content-around">
+    <div class="d-flex flex-column mt-5">
+        {% for show in all_shows %}
+        <div class="card" style="width: 1250px;">
+            <div class="d-flex flex-row">
+                <div class="col-sm-3">
+                    <img class="card-img" src="/src/static/images/DJI.JPG" alt="Movie image">
+                </div>
+                <div class="col-sm-6">
+                    <div class="card-body">
+                        <h5 class="card-title">Title</h5>
+                        <p class="card-text">Date</p>
+                        <p class="card-text">Time</p>
+                        <a href="#" class="btn btn-primary">View Profile</a>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="card-body">
+                        <p class="card-text">Movie description</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
