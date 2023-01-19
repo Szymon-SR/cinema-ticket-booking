@@ -5,3 +5,140 @@
 .form-card {
     width: 33%;
 }
+
+.employee_image{
+    position: absolute;
+    top: 100px;
+    right: 100px;
+}
+
+.btn_login{
+    text-align: center;
+    border: 1px solid;
+    justify-content: center;
+}
+
+
+.input_form{
+    padding-bottom: 10px;
+    text-align: center;
+    justify-content: center;
+}
+
+.title_employee{
+    text-align: center;
+    justify-content: center;
+    margin-right: 250px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.info_employee{
+    text-align: left;
+    justify-content: center;
+    margin-right: 250px;
+    margin-left: 100px;
+    margin-bottom: 100px;
+    font-size: 13px;
+}
+.btn_employee{
+    text-align: center;
+    justify-content: center;
+    margin-right: 20px;
+    font-size: 15px;
+
+}
+
+.cf_table{
+    text-align: left;
+    justify-content: center;
+    padding-right: 100px;
+    padding-left: 100px;
+    padding-top: 50px;
+    width: 100%;
+}
+
+.cf_title{
+    text-align: left;
+    padding-top: 50px;
+    padding-left: 100px;
+}
+
+.cf_form{
+    text-align: left;
+    padding-top: 30px;
+    padding-left: 100px;
+}
+
+.res_btn{
+    margin-left: 20px;
+
+}
+
+.cf_main{
+    padding-top: 50px;
+    padding-right: 100px;
+    padding-left: 100px;
+}
+
+.cf_email{
+    text-align: left;
+    margin-right: 400px;
+    margin-left: 50px;
+}
+.cf_date{
+    text-align: right;
+    margin-left: 50px;
+}
+.cf_message{
+    width: 100%;
+    height: 150px;
+}
+
+.cf_answer{
+    width: 100%;
+    height: 200px;
+    margin-top: 30px;
+}
+
+.cf_btn{
+    text-align: right;
+    justify-content: right;
+    margin-top: 10px;
+    position: absolute;
+    right: 100px;
+    bottom: 150px;
+}
+
+.res_table{
+    text-align: left;
+    justify-content: center;
+    padding-right: 100px;
+    padding-left: 100px;
+    padding-top: 20px;
+    width: 100%;
+}
+.res_tab_det{
+    padding-left: 100px;
+    height: 100px;
+    border: 1px black;
+}
+
+.res_tab_sta{
+    position: absolute;
+    right: 100px;
+    height: 100px;
+    border: 1px black;
+}
+
+.res_form{
+    margin-left: 30px;
+}
+
+.res_btn{
+    margin-top: 10px;
+    margin-right: 900px;
+}
+
+
+

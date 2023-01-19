@@ -1,0 +1,37 @@
+{% extends 'base_employee.html' %}
+
+{% block content %}
+<h2 class="cf_title">Rezerwacje z ostatnich 20 dni</h2>
+    <form class="cf_form">
+    <input placeholder="wyszukaj rezerwacje">
+    <button class="res_btn">Szukaj</button>
+    </form>
+    <div class="d-flex flex-row justify-content-around">
+
+    <div class="cf_table">
+          <table id="data" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Numer</th>
+                <th>Dane</th>
+                <th>Status</th>
+                <th>Data Złożenia </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for reservation in all_reservations %}
+                <tr>
+                  <td>{{ reservation.numer }}</td>
+                  <td>{{ reservation.dane }}</td>
+                  <td>{{ reservation.status }}</td>
+                  <td>{{ reservation.data }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+    </div>
+</div>
+
+
+{% endblock %}
