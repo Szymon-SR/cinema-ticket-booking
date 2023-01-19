@@ -1,0 +1,21 @@
+{% extends 'base_employee.html' %}
+
+{% block content %}
+    <div class="cf_main">
+
+        <p>Nadawca:
+            <input placeholder="email" disabled class="cf_email">
+           Data wysłania:
+            <input placeholder="date" disabled class="cf_date">
+        </p>
+        <textarea placeholder="treść wiadomości" disabled class="cf_message" ></textarea>
+        <form>
+        <textarea placeholder="treść odpowiedzi" class="cf_answer"></textarea>
+            <button type="submit" class="cf_btn">Wyślij</button>
+        </form>
+
+
+    </div>
+
+
+{% endblock %}
