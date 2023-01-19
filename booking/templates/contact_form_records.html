@@ -1,0 +1,33 @@
+{% extends 'base_employee.html' %}
+
+{% block content %}
+<h2 class="cf_title">Wiadomości bez odpowiedzi</h2>
+    <div class="d-flex flex-row justify-content-around">
+
+    <div class="cf_table">
+          <table id="data" class="table table-striped">
+            <thead>
+              <tr>
+                <th>Numer</th>
+                <th>Email</th>
+                <th>Data złożenia</th>
+                <th>Treść </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for message in all_messages %}
+                <tr>
+                  <td>{{ message.numer }}</td>
+                  <td>{{ message.email }}</td>
+                  <td>{{ message.datazlozenia }}</td>
+                  <td>{{ message.tresc }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+    </div>
+</div>
+
+
+{% endblock %}
