@@ -16,7 +16,7 @@
             </thead>
             <tbody>
               {% for message in all_messages %}
-                <tr>
+                <tr onclick="window.location.href='{{ url_for('booking.employee_answer') }}';">
                   <td>{{ message.numer }}</td>
                   <td>{{ message.email }}</td>
                   <td>{{ message.datazlozenia }}</td>
