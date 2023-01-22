@@ -69,8 +69,8 @@ def add_bookings():
 
 
 def populate_database():
-    #add_clients()
-    #add_employees()
+    add_clients()
+    add_employees()
     add_bookings()
 
 

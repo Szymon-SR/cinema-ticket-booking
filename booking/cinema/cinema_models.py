@@ -37,9 +37,9 @@ class Film(Base):
     Pracownik = relationship('Pracownik')
 
 class Formularz(Base):
-    __tablename__ = 'Seans'
+    __tablename__ = 'Formularz'
 
-    Id = Column(Integer(10), primary_key=True)
+    Id = Column(Integer, primary_key=True)
     Tresc = Column(String(1000), nullable=False)
     TerminPrzeslania = Column(Date, nullable=False)
     TerminOdpowiedzi = Column(Date)
