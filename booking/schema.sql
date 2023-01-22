@@ -96,13 +96,14 @@ CREATE TABLE Miejsce (
 );
 
 CREATE TABLE Formularz (
-    Id varchar(25) NOT NULL UNIQUE,
+    Id INTEGER(10) NOT NULL UNIQUE,
     Tresc varchar(1000) NOT NULL,
     TerminPrzeslania date NOT NULL,
     TerminOdpowiedzi date,
     Odpowiedz varchar(1000),
     KlientEmail varchar(50) NOT NULL,
     PracownikId integer(3) NOT NULL,
+    PRIMARY KEY (Id),
     FOREIGN KEY(KlientEmail) REFERENCES Klient(Email),
     FOREIGN KEY(PracownikId) REFERENCES Pracownik(Id)
 );

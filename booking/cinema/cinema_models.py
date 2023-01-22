@@ -36,16 +36,19 @@ class Film(Base):
 
     Pracownik = relationship('Pracownik')
 
-t_Formularz = Table(
-    'Formularz', metadata,
-    Column('Id', String(25), nullable=False),
-    Column('Tresc', String(1000), nullable=False),
-    Column('TerminPrzeslania', Date, nullable=False),
-    Column('TerminOdpowiedzi', Date),
-    Column('Odpowiedz', String(1000)),
-    Column('KlientEmail', ForeignKey('Klient.Email'), nullable=False),
-    Column('PracownikId', ForeignKey('Pracownik.Id'), nullable=False)
-)
+class Formularz(Base):
+    __tablename__ = 'Seans'
+
+    Id = Column(Integer(10), primary_key=True)
+    Tresc = Column(String(1000), nullable=False)
+    TerminPrzeslania = Column(Date, nullable=False)
+    TerminOdpowiedzi = Column(Date)
+    Odpowiedz = Column(String(1000))
+    KlientEmail = Column(ForeignKey('Klient.Email'), nullable=False)
+    PracownikId = Column(ForeignKey('Pracownik.Id'), nullable=False)
+
+    Klient = relationship('Klient')
+    Pracownik = relationship('Pracownik')
 
 class Seans(Base):
     __tablename__ = 'Seans'
