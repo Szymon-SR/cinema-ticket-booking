@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Blueprint, request
+from flask import Flask, render_template, Blueprint, request, redirect
 
 
 from booking.data_management.manage_form_data import add_contact_form_to_database
@@ -20,7 +20,7 @@ def contact():
     if request.method == "POST":
         form = request.form
         
-        add_contact_form_to_database()
+        add_contact_form_to_database(form.get("Message"), form.get("Email"))
         
         return redirect('/')
 

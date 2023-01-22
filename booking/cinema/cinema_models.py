@@ -5,7 +5,10 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from booking import Base
 
+# those import are not used theoretically but it does not work
+# without them (something about scope i guess)
 from booking.employees.employee_models import Pracownik
+from booking.clients.client_models import Klient    
 
 
 metadata = Base.metadata
