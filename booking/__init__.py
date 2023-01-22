@@ -1,5 +1,7 @@
 from flask import Flask
+from sqlalchemy.ext.declarative import declarative_base
 
+Base = declarative_base()
 
 def create_app():
     app = Flask(__name__)

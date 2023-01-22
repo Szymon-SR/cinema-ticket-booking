@@ -3,8 +3,11 @@ from sqlalchemy import Column, Date, ForeignKey, ForeignKeyConstraint, Integer, 
 from sqlalchemy.sql.sqltypes import NullType
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from booking import Base
 
-Base = declarative_base()
+from booking.employees.employee_models import Pracownik
+
+
 metadata = Base.metadata
 
 class Sala(Base):
@@ -68,4 +71,4 @@ class Miejsce(Base):
     SeansId = Column(ForeignKey('Seans.Id'), nullable=False)
 
     Sala = relationship('Sala')
-    Sean = relationship('Sean')
+    Seans = relationship('Seans')

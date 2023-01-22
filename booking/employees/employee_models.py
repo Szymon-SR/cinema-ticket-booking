@@ -3,8 +3,8 @@ from sqlalchemy import Column, Date, ForeignKey, ForeignKeyConstraint, Integer, 
 from sqlalchemy.sql.sqltypes import NullType
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from booking import Base
 
-Base = declarative_base()
 metadata = Base.metadata
 
 class Pracownik(Base):
