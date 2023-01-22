@@ -1,11 +1,13 @@
 # coding: utf-8
-from sqlalchemy import Column, Date, ForeignKey, ForeignKeyConstraint, Integer, Numeric, String, Table, Time
+from sqlalchemy import Column, Date, ForeignKey, ForeignKeyConstraint, Integer, Numeric, String, Table, Time, \
+    create_engine
 from sqlalchemy.sql.sqltypes import NullType
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 metadata = Base.metadata
+
 
 class Pracownik(Base):
     __tablename__ = 'Pracownik'
@@ -19,4 +21,6 @@ class Pracownik(Base):
     Telefon = Column(String(12), nullable=False)
     czyKierownik = Column(Integer)
 
-    
+
+engine = create_engine("sqlite:///booking/cinema_base.db", echo=True)
+Base.metadata.create_all(bind=engine)

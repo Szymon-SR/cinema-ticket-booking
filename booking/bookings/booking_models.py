@@ -1,5 +1,6 @@
 # coding: utf-8
-from sqlalchemy import Column, Date, ForeignKey, ForeignKeyConstraint, Integer, Numeric, String, Table, Time
+from sqlalchemy import Column, Date, ForeignKey, ForeignKeyConstraint, Integer, Numeric, String, Table, Time, \
+    create_engine
 from sqlalchemy.sql.sqltypes import NullType
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -38,3 +39,7 @@ class Bilet(Base):
     Miejsce = relationship('Miejsce')
     Rezerwacja = relationship('Rezerwacja')
     Sean = relationship('Sean')
+
+
+engine = create_engine("sqlite:///booking/cinema_base.db", echo=True)
+Base.metadata.create_all(bind=engine)
