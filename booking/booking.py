@@ -1,7 +1,9 @@
+import datetime
+
 from flask import Flask, render_template, Blueprint, request, redirect
 import flask_login
 
-
+from booking.cinema.cinema_models import Seans
 from booking.data_management.manage_form_data import add_contact_form_to_database
 # from . import create_app
 # app = create_app()
@@ -9,8 +11,11 @@ from booking.data_management.manage_form_data import add_contact_form_to_databas
 bp = Blueprint("booking", __name__)
 
 @bp.route("/")
-def hello_world():
-    shows_mocks = ["xd", "xd"]
+def main_page():
+    shows_mocks = [
+    {"title": "Matrix Zmartwychwstania", "date": "27 stycznia", "time": "19:00", "image": "/static/images/matrix.jpg", "description": "Podążaj za Neo, który prowadzi zwyczajne życie w San Francisco, gdzie jego terapeuta przepisuje mu niebieskie pigułki. Jednak Morfeusz oferuje mu czerwoną pigułkę i ponownie otwiera jego umysł na świat Matrix."},
+    {"title": "Avatar: Istota wody", "date": "28 stycznia", "time": "17:30", "image": "/static/images/avatar.jpg", "description": "Pandorę znów napada wroga korporacja w poszukiwaniu cennych minerałów. Jack i Neytiri wraz z rodziną zmuszeni są opuścić wioskę i szukać pomocy u innych plemion zamieszkujących planetę."},
+    ]
 
     
 
