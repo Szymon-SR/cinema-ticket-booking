@@ -1,4 +1,5 @@
 import datetime
+import random
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -82,15 +83,19 @@ def employee_reservations():
     reservations = session.query(Rezerwacja).all()
     return render_template('reservations_records.html', all_reservations = reservations)
 
-@bp.route("/employee/contact/answer")
+@bp.route("/employee/contact/answer/<int:id>")
 @flask_login.login_required
-def employee_answer():
-    return render_template('contact_form_answer.html')
+def employee_answer(id):
+    message = session.query(Formularz).filter(Formularz.Id == id).first()
+    return render_template('contact_form_answer.html', email = message.KlientEmail, data = message.TerminPrzeslania, tresc = message.Tresc)
 
-@bp.route("/employee/reservations/details")
+@bp.route("/employee/reservations/details/<int:id>")
 @flask_login.login_required
-def employee_reservation_details():
-    return render_template('reservation_details.html')
+def employee_reservation_details(id):
+    reservation = session.query(Rezerwacja).filter(Rezerwacja.Numer == id).first()
+    tickets = random.randint(1, 6)
+    return render_template('reservation_details.html', numer = reservation.Numer, dane = reservation.KlientEmail, data = reservation.TerminZlozenia,
+             status = reservation.Status, waznosc = reservation.TerminWaznosci, liczba = tickets)
 
 
 @bp.route("/employee/logout")

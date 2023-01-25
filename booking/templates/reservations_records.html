@@ -20,7 +20,7 @@
             </thead>
             <tbody>
               {% for reservation in all_reservations %}
-                <tr onclick="window.location.href='{{ url_for('booking.employee_reservation_details') }}';">
+                <tr onclick="window.location.href='{{ url_for('booking.employee_reservation_details', id = reservation.Numer) }}';">
                   <td>{{ reservation.Numer }}</td>
                   <td>{{ reservation.KlientEmail }}</td>
                   <td>{{ reservation.Status }}</td>
