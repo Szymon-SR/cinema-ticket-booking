@@ -1,4 +1,4 @@
-Simple flask app.
+Simple flask
 
 After clone, create database file from sql definitions:
 ```flask --app booking init-db```

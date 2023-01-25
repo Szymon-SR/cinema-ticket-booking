@@ -1,12 +1,19 @@
 import datetime
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 
-from flask import Flask, render_template, Blueprint, request, redirect
+from flask import Flask, render_template, Blueprint, request, redirect, url_for
 import flask_login
 
 from booking.cinema.cinema_models import Seans
 from booking.data_management.manage_form_data import add_contact_form_to_database
+from booking.employees.employee_models import Pracownik
+
 # from . import create_app
 # app = create_app()
+
+engine = create_engine('sqlite:///booking/cinema_base.db', echo=True)
+Session = sessionmaker(bind=engine)
 
 bp = Blueprint("booking", __name__)
 
@@ -36,9 +43,28 @@ def contact():
 def login():
     return render_template('user_login.html')
 
+@bp.route("/login", methods=['GET', 'POST'])
+def login_post():
+    session = Session()
+    login_form = request.form.get("login")
+    password_form = request.form.get("password")
+
+    user = session.query(Pracownik).filter(Pracownik.Login == login_form).first()
+    if user and (password_form == user.Hasło):
+        flask_login.login_user(user)
+
+        return redirect(url_for("booking.employee"))
+        flash("Zalogowano", 'success')
+    else:
+        # Wrong email and/or password
+
+        return redirect(url_for("booking.login"))
+        flash("Niepoprawne dane.", 'error')
+
 @bp.route("/employee")
 def employee():
-    return render_template('employee_account.html')
+    current_user = flask_login.current_user.Id
+    return render_template('employee_account.html', id = current_user)
 
 @bp.route("/employee/contact")
 def employee_contact_form():

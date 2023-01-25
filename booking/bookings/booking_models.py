@@ -3,12 +3,13 @@ from sqlalchemy import Column, Date, ForeignKey, ForeignKeyConstraint, Integer, 
 from sqlalchemy.sql.sqltypes import NullType
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-from booking import Base
+# from booking import Base
 
 from booking.clients.client_models import Klient
 from booking.employees.employee_models import Pracownik
 from booking.cinema.cinema_models import Miejsce, Seans
 
+Base = declarative_base()
 metadata = Base.metadata
 
 class Rezerwacja(Base):
