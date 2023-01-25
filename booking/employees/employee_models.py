@@ -3,10 +3,10 @@ from sqlalchemy import Column, Date, ForeignKey, ForeignKeyConstraint, Integer, 
 from sqlalchemy.sql.sqltypes import NullType
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-# from booking import Base
+from booking import Base
 from flask_login import UserMixin
 
-Base = declarative_base()
+# Base = declarative_base()
 metadata = Base.metadata
 
 class Pracownik(Base, UserMixin):

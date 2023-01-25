@@ -1,19 +1,25 @@
 import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 
-from flask import Flask, render_template, Blueprint, request, redirect, url_for
+from flask import Flask, render_template, Blueprint, request, redirect, url_for, flash
 import flask_login
 
-from booking.cinema.cinema_models import Seans
+# from booking.cinema.cinema_models import Seans
 from booking.data_management.manage_form_data import add_contact_form_to_database
 from booking.employees.employee_models import Pracownik
+from booking.cinema.cinema_models import Formularz
+from booking.bookings.booking_models import Rezerwacja
+
+
 
 # from . import create_app
 # app = create_app()
 
 engine = create_engine('sqlite:///booking/cinema_base.db', echo=True)
 Session = sessionmaker(bind=engine)
+session = Session()
 
 bp = Blueprint("booking", __name__)
 
@@ -24,7 +30,6 @@ def main_page():
     {"title": "Avatar: Istota wody", "date": "28 stycznia", "time": "17:30", "image": "/static/images/avatar.jpg", "description": "Pandorę znów napada wroga korporacja w poszukiwaniu cennych minerałów. Jack i Neytiri wraz z rodziną zmuszeni są opuścić wioskę i szukać pomocy u innych plemion zamieszkujących planetę."},
     ]
 
-    
 
     return render_template('main.html', all_shows = shows_mocks)
 
@@ -45,7 +50,7 @@ def login():
 
 @bp.route("/login", methods=['GET', 'POST'])
 def login_post():
-    session = Session()
+    
     login_form = request.form.get("login")
     password_form = request.form.get("password")
 
@@ -56,30 +61,41 @@ def login_post():
         return redirect(url_for("booking.employee"))
         flash("Zalogowano", 'success')
     else:
-        # Wrong email and/or password
-
         return redirect(url_for("booking.login"))
         flash("Niepoprawne dane.", 'error')
 
 @bp.route("/employee")
+@flask_login.login_required
 def employee():
     current_user = flask_login.current_user.Id
     return render_template('employee_account.html', id = current_user)
 
 @bp.route("/employee/contact")
+@flask_login.login_required
 def employee_contact_form():
-    shows_mocks = ["xd", "xd"]
-    return render_template('contact_form_records.html', all_messages = shows_mocks)
+    contact_forms = session.query(Formularz).filter(Formularz.Odpowiedz == None).all()
+    return render_template('contact_form_records.html', all_messages = contact_forms)
 
 @bp.route("/employee/reservations")
+@flask_login.login_required
 def employee_reservations():
-    shows_mocks = ["xd", "xd"]
-    return render_template('reservations_records.html', all_reservations = shows_mocks)
+    reservations = session.query(Rezerwacja).all()
+    return render_template('reservations_records.html', all_reservations = reservations)
 
 @bp.route("/employee/contact/answer")
+@flask_login.login_required
 def employee_answer():
     return render_template('contact_form_answer.html')
 
 @bp.route("/employee/reservations/details")
+@flask_login.login_required
 def employee_reservation_details():
     return render_template('reservation_details.html')
+
+
+@bp.route("/employee/logout")
+@flask_login.login_required
+def logout():
+    flask_login.logout_user()
+    flash("Wylogowano", 'success')
+    return redirect(url_for("booking.login"))

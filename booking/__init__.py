@@ -1,15 +1,15 @@
 from flask import Flask
 from sqlalchemy.ext.declarative import declarative_base
 from flask_login import LoginManager
-from booking.employees.employee_models import Pracownik
+# from booking.employees.employee_models import Pracownik
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+Base = declarative_base()
 
 engine = create_engine('sqlite:///booking/cinema_base.db', echo=True)
 Session = sessionmaker(bind=engine)
 session = Session()
-Base = declarative_base()
 
 def create_app():
     app = Flask(__name__)
@@ -29,7 +29,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(Id):
-        return session.query(Pracownik).filter(Pracownik.Id == Id).first()
+        return session.query(employees.employee_models.Pracownik).filter(employees.employee_models.Pracownik.Id == Id).first()
 
 
     # apply blueprints
