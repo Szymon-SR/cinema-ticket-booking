@@ -9,9 +9,9 @@
             <input placeholder={{data}} disabled class="cf_date">
         </p>
         <textarea placeholder={{tresc}} disabled class="cf_message" ></textarea>
-        <form>
-        <textarea placeholder="treść odpowiedzi" class="cf_answer"></textarea>
-            <button type="submit" class="cf_btn">Wyślij</button>
+        <form action="{{ url_for('booking.employee_answer_send', id=numer) }}" method="post">
+        <textarea placeholder="treść odpowiedzi" class="cf_answer" name="odpowiedz"></textarea>
+            <input type="submit" class="cf_btn" value="Wyślij">
         </form>
 
 

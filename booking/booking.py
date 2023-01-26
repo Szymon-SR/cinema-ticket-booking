@@ -96,17 +96,19 @@ def employee_reservations():
 def employee_reservations_post():
     if request.method == 'POST':
         search_id = (int)(request.form.get("res_id"))
-        session = Session()
-        search = session.query(Rezerwacja).filter(Rezerwacja.Numer == search_id).first()
-        session.close()
-        if (search != None):
-            flash("Znaleziono", 'success')
-            return redirect(url_for("booking.employee_reservation_details", id = search.Numer))
-            
+        if (search_id != None):
+            session = Session()
+            search = session.query(Rezerwacja).filter(Rezerwacja.Numer == search_id).first()
+            session.close()
+            if (search != None):
+                flash("Znaleziono", 'success')
+                return redirect(url_for("booking.employee_reservation_details", id = search.Numer))
+                
+            else:
+                flash("Nie znaleziono", 'error')
+                return redirect(url_for("booking.employee_reservations"))
         else:
-            flash("Nie znaleziono", 'error')
             return redirect(url_for("booking.employee_reservations"))
-    
     else:
         return redirect(url_for("booking.employee_reservations"))
 
@@ -125,11 +127,29 @@ def employee_reservations_update(id):
             
         flash("Zmieniono status", 'success')
         return redirect(url_for("booking.employee_reservation_details", id = search.Numer))
-            
-    
-    
+                
     else:
         return redirect(url_for("booking.employee_reservations"))
+
+@bp.route("/employee/contact/answer/send/<int:id>", methods=['GET','POST'])
+@flask_login.login_required
+def employee_answer_send(id):
+    if request.method == 'POST':
+        text = request.form.get("odpowiedz")
+        if (text != None):
+            session = Session()
+            session.expire_on_commit = False
+            search = session.query(Formularz).filter(Formularz.Id == id).first()
+            search.Odpowiedz = text
+            search.TerminOdpowiedzi = datetime.datetime.utcnow()
+            session.commit()
+            session.close()
+                
+            flash("Wyslano odpowiedz", 'success')
+            return redirect(url_for("booking.employee_contact_form"))
+                
+    else:
+        return redirect(url_for("booking.employee_contact_form"))
 
 
 @bp.route("/employee/contact/answer/<int:id>")
@@ -138,7 +158,7 @@ def employee_answer(id):
     session = Session()
     message = session.query(Formularz).filter(Formularz.Id == id).first()
     session.close()
-    return render_template('contact_form_answer.html', email = message.KlientEmail, data = message.TerminPrzeslania, tresc = message.Tresc)
+    return render_template('contact_form_answer.html', email = message.KlientEmail, data = message.TerminPrzeslania, tresc = message.Tresc, numer= message.Id)
 
 @bp.route("/employee/reservations/details/<int:id>")
 @flask_login.login_required
