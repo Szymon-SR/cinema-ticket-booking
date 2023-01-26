@@ -11,8 +11,7 @@ def get_db():
         g.db = sqlite3.connect(
             DATABASE_PATH,
             detect_types=sqlite3.PARSE_DECLTYPES,
-
-        connect_args={"check_same_thread": False}
+            connect_args={'check_same_thread': False}
         )
         g.db.row_factory = sqlite3.Row
 

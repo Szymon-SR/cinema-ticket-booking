@@ -20,7 +20,7 @@ from booking.bookings.booking_models import Rezerwacja
 
 engine = create_engine('sqlite:///booking/cinema_base.db', echo=True)
 Session = sessionmaker(bind=engine)
-session = Session()
+
 
 bp = Blueprint("booking", __name__)
 
@@ -51,11 +51,13 @@ def login():
 
 @bp.route("/login", methods=['GET', 'POST'])
 def login_post():
+    session = Session()
     
     login_form = request.form.get("login")
     password_form = request.form.get("password")
 
     user = session.query(Pracownik).filter(Pracownik.Login == login_form).first()
+    session.close()
     if user and (password_form == user.Hasło):
         flask_login.login_user(user)
 
@@ -68,19 +70,25 @@ def login_post():
 @bp.route("/employee")
 @flask_login.login_required
 def employee():
+    session = Session()
     current_user = flask_login.current_user.Id
+    session.close()
     return render_template('employee_account.html', id = current_user)
 
 @bp.route("/employee/contact")
 @flask_login.login_required
 def employee_contact_form():
+    session = Session()
     contact_forms = session.query(Formularz).filter(Formularz.Odpowiedz == None).all()
+    session.close()
     return render_template('contact_form_records.html', all_messages = contact_forms)
 
 @bp.route("/employee/reservations")
 @flask_login.login_required
 def employee_reservations():
+    session = Session()
     reservations = session.query(Rezerwacja).all()
+    session.close()
     return render_template('reservations_records.html', all_reservations = reservations)
 
 @bp.route("/employee/reservations", methods=['POST'])
@@ -88,7 +96,9 @@ def employee_reservations():
 def employee_reservations_post():
     if request.method == 'POST':
         search_id = (int)(request.form.get("res_id"))
+        session = Session()
         search = session.query(Rezerwacja).filter(Rezerwacja.Numer == search_id).first()
+        session.close()
         if (search != None):
             flash("Znaleziono", 'success')
             return redirect(url_for("booking.employee_reservation_details", id = search.Numer))
@@ -103,13 +113,17 @@ def employee_reservations_post():
 @bp.route("/employee/contact/answer/<int:id>")
 @flask_login.login_required
 def employee_answer(id):
+    session = Session()
     message = session.query(Formularz).filter(Formularz.Id == id).first()
+    session.close()
     return render_template('contact_form_answer.html', email = message.KlientEmail, data = message.TerminPrzeslania, tresc = message.Tresc)
 
 @bp.route("/employee/reservations/details/<int:id>")
 @flask_login.login_required
 def employee_reservation_details(id):
+    session = Session()
     reservation = session.query(Rezerwacja).filter(Rezerwacja.Numer == id).first()
+    session.close()
     tickets = random.randint(1, 6)
     return render_template('reservation_details.html', numer = reservation.Numer, dane = reservation.KlientEmail, data = reservation.TerminZlozenia,
              status = reservation.Status, waznosc = reservation.TerminWaznosci, liczba = tickets)

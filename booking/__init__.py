@@ -29,8 +29,9 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(Id):
-        return session.query(employees.employee_models.Pracownik).filter(employees.employee_models.Pracownik.Id == Id).first()
-
+        user = session.query(employees.employee_models.Pracownik).filter(employees.employee_models.Pracownik.Id == Id).first()
+        session.close()
+        return user
 
     # apply blueprints
     from booking import booking
