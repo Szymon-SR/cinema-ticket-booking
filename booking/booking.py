@@ -110,6 +110,28 @@ def employee_reservations_post():
     else:
         return redirect(url_for("booking.employee_reservations"))
 
+@bp.route("/employee/reservations/update/<int:id>", methods=['GET','POST'])
+@flask_login.login_required
+def employee_reservations_update(id):
+    if request.method == 'POST':
+        value = request.form.get("status")
+        session = Session()
+        session.expire_on_commit = False
+        
+        search = session.query(Rezerwacja).filter(Rezerwacja.Numer == id).first()
+        search.Status = value
+        session.commit()
+        session.close()
+            
+        flash("Zmieniono status", 'success')
+        return redirect(url_for("booking.employee_reservation_details", id = search.Numer))
+            
+    
+    
+    else:
+        return redirect(url_for("booking.employee_reservations"))
+
+
 @bp.route("/employee/contact/answer/<int:id>")
 @flask_login.login_required
 def employee_answer(id):
