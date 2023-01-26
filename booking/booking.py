@@ -83,6 +83,23 @@ def employee_reservations():
     reservations = session.query(Rezerwacja).all()
     return render_template('reservations_records.html', all_reservations = reservations)
 
+@bp.route("/employee/reservations", methods=['POST'])
+@flask_login.login_required
+def employee_reservations_post():
+    if request.method == 'POST':
+        search_id = (int)(request.form.get("res_id"))
+        search = session.query(Rezerwacja).filter(Rezerwacja.Numer == search_id).first()
+        if (search != None):
+            flash("Znaleziono", 'success')
+            return redirect(url_for("booking.employee_reservation_details", id = search.Numer))
+            
+        else:
+            flash("Nie znaleziono", 'error')
+            return redirect(url_for("booking.employee_reservations"))
+    
+    else:
+        return redirect(url_for("booking.employee_reservations"))
+
 @bp.route("/employee/contact/answer/<int:id>")
 @flask_login.login_required
 def employee_answer(id):
