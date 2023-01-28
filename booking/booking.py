@@ -6,9 +6,10 @@ from sqlalchemy.ext.declarative import declarative_base
 
 from flask import Flask, render_template, Blueprint, request, redirect, url_for, flash
 import flask_login
+from flask_mail import Mail, Message
 
 # from booking.cinema.cinema_models import Seans
-from booking.data_management.manage_form_data import add_contact_form_to_database
+from booking.data_management.manage_form_data import add_contact_form_to_database, send_email
 from booking.employees.employee_models import Pracownik
 from booking.cinema.cinema_models import Formularz
 from booking.bookings.booking_models import Rezerwacja
@@ -23,6 +24,8 @@ Session = sessionmaker(bind=engine)
 
 
 bp = Blueprint("booking", __name__)
+
+mail = Mail()
 
 @bp.route("/")
 def main_page():
@@ -142,6 +145,7 @@ def employee_answer_send(id):
             search = session.query(Formularz).filter(Formularz.Id == id).first()
             search.Odpowiedz = text
             search.TerminOdpowiedzi = datetime.datetime.utcnow()
+            send_email(email=search.KlientEmail, message=text)
             session.commit()
             session.close()
                 

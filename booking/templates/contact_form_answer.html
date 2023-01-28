@@ -10,7 +10,7 @@
         </p>
         <textarea placeholder={{tresc}} disabled class="cf_message" ></textarea>
         <form action="{{ url_for('booking.employee_answer_send', id=numer) }}" method="post">
-        <textarea placeholder="treść odpowiedzi" class="cf_answer" name="odpowiedz"></textarea>
+        <textarea placeholder="treść odpowiedzi" class="cf_answer" name="odpowiedz" required></textarea>
             <input type="submit" class="cf_btn" value="Wyślij">
         </form>
 

@@ -14,3 +14,4 @@ sqlacodegen==2.3.0
 SQLAlchemy==1.4.46
 typing_extensions==4.4.0
 Werkzeug==2.2.2
+Flask-Mail==0.9.1
