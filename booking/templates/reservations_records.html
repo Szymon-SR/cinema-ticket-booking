@@ -1,6 +1,8 @@
 {% extends 'base_employee.html' %}
 
 {% block content %}
+{% include 'error.html' %}
+
 <h2 class="cf_title">Rezerwacje z ostatnich 20 dni</h2>
     <form class="cf_form" method="post" action="/employee/reservations">
     <input placeholder="wyszukaj rezerwacje" name="res_id" type="number" required>

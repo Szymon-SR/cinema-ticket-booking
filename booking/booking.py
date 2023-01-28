@@ -63,12 +63,13 @@ def login_post():
     session.close()
     if user and (password_form == user.Hasło):
         flask_login.login_user(user)
-
         return redirect(url_for("booking.employee"))
-        flash("Zalogowano", 'success')
+        
     else:
-        return redirect(url_for("booking.login"))
         flash("Niepoprawne dane.", 'error')
+        return redirect(url_for("booking.login"))
+        
+        
 
 @bp.route("/employee")
 @flask_login.login_required
@@ -104,13 +105,13 @@ def employee_reservations_post():
             search = session.query(Rezerwacja).filter(Rezerwacja.Numer == search_id).first()
             session.close()
             if (search != None):
-                flash("Znaleziono", 'success')
                 return redirect(url_for("booking.employee_reservation_details", id = search.Numer))
                 
             else:
-                flash("Nie znaleziono", 'error')
+                flash("Nie znaleziono rezerwacji o podanym numerze.", 'error')
                 return redirect(url_for("booking.employee_reservations"))
         else:
+            flash("Nie znaleziono rezerwacji o podanym numerze.", 'error')
             return redirect(url_for("booking.employee_reservations"))
     else:
         return redirect(url_for("booking.employee_reservations"))
@@ -127,11 +128,10 @@ def employee_reservations_update(id):
         search.Status = value
         session.commit()
         session.close()
-            
-        flash("Zmieniono status", 'success')
         return redirect(url_for("booking.employee_reservation_details", id = search.Numer))
                 
     else:
+        flash("Status rezerwacji nie został zmieniony.", 'error')
         return redirect(url_for("booking.employee_reservations"))
 
 @bp.route("/employee/contact/answer/send/<int:id>", methods=['GET','POST'])
@@ -149,10 +149,11 @@ def employee_answer_send(id):
             session.commit()
             session.close()
                 
-            flash("Wyslano odpowiedz", 'success')
+            flash("Wiadomość została wysłana.", 'success')
             return redirect(url_for("booking.employee_contact_form"))
                 
     else:
+        flash("Wiadomość nie została wysłana. Spróbuj ponownie.", 'error')
         return redirect(url_for("booking.employee_contact_form"))
 
 
@@ -179,5 +180,5 @@ def employee_reservation_details(id):
 @flask_login.login_required
 def logout():
     flask_login.logout_user()
-    flash("Wylogowano", 'success')
+    flash("Wylogowano.", 'success')
     return redirect(url_for("booking.login"))
