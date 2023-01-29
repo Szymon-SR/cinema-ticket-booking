@@ -8,6 +8,7 @@ from flask import current_app, g
 DATABASE_PATH = "booking/cinema_base.db"
 TEST_DATABASE_PATH = "booking/test_base.db"
 
+
 def get_db():
     if "db" not in g:
         g.db = sqlite3.connect(
@@ -33,6 +34,7 @@ def init_db():
     with current_app.open_resource("schema.sql") as f:
         db.executescript(f.read().decode("utf8"))
 
+
 def get_test_db():
     if "db" not in g:
         g.db = sqlite3.connect(
@@ -43,6 +45,7 @@ def get_test_db():
         g.db.row_factory = sqlite3.Row
 
     return g.db
+
 
 def init_test_db():
     db = get_test_db()

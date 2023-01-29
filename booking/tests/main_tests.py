@@ -59,7 +59,6 @@ class TestBase(TestCase):
         session.commit()
 
 
-
 # class TestModels(TestBase):
 #     def test_form_model(self):
 #         """
@@ -82,7 +81,6 @@ class TestBase(TestCase):
 #         session.commit()
 
 #         self.assertEqual(session.query(Klient).count(), 1)
-
 
 
 class TestViews(TestBase):
@@ -109,13 +107,11 @@ class TestViews(TestBase):
 
 
 class TestErrorPages(TestBase):
-
     def test_404_not_found(self):
         response = self.client.get("/nopage")
         self.assertEqual(response.status_code, 404)
 
         self.assertTrue("404 Not Found" in str(response.data))
-
 
 
 if __name__ == "__main__":

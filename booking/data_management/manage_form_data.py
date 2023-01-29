@@ -24,16 +24,23 @@ mail = Mail()
 
 
 def add_contact_form_to_database(message: str, email: str):
+    """This function validates client data from contact form, and if validation is correct,
+    adds it to the database and returns True. Returns False otherwise.
+    :param str message: Clients message
+    :param str email: Clients email
+    :returns: Result of validation
+    :rtype: bool
+    """
     # validation
     if not (message and email):
         return False
-    
+
     if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
         return False
-    
+
     if len(message) < MINIMAL_MESSAGE_LEN:
         return False
-    
+
     # move on to happy path
     session = Session()
 

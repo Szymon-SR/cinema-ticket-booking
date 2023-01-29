@@ -9,14 +9,18 @@ class TestSendingForm(unittest.TestCase):
         """
         Test that Valid form is validated correctly
         """
-        validation = add_contact_form_to_database("Witam, czy kino jest otwarte?", "kowalski112@wp.pl")
+        validation = add_contact_form_to_database(
+            "Witam, czy kino jest otwarte?", "kowalski112@wp.pl"
+        )
         self.assertTrue(validation)
 
     def test_invalid_email_returns(self):
         """
         Test that form with invalid email is validated correctly
         """
-        validation = add_contact_form_to_database("Witam, czy kino jest otwarte?", "Kolejowa 14a")
+        validation = add_contact_form_to_database(
+            "Witam, czy kino jest otwarte?", "Kolejowa 14a"
+        )
         self.assertFalse(validation)
 
     def test_too_short_message_returns(self):
@@ -25,7 +29,7 @@ class TestSendingForm(unittest.TestCase):
         """
         validation = add_contact_form_to_database("?", "kowalski112@wp.pl")
         self.assertFalse(validation)
-    
+
     def test_null_question_returns(self):
         """
         Test that form with null data is validated correctly
@@ -39,6 +43,7 @@ class TestSendingForm(unittest.TestCase):
         """
         validation = add_contact_form_to_database("Witam", None)
         self.assertFalse(validation)
+
 
 if __name__ == "__main__":
     unittest.main()
