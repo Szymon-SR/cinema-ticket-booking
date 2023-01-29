@@ -9,8 +9,9 @@ from booking.employees.employee_models import Pracownik
 
 Base = declarative_base()
 
-engine = create_engine('sqlite:///booking/cinema_base.db', echo=True)
+engine = create_engine("sqlite:///booking/cinema_base.db", echo=True)
 Session = sessionmaker(bind=engine)
+
 
 def delete_reservations():
     session = Session()
