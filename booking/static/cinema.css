@@ -93,12 +93,14 @@
 .cf_message{
     width: 100%;
     height: 150px;
+    resize: none;
 }
 
 .cf_answer{
     width: 100%;
     height: 200px;
     margin-top: 30px;
+    resize: none;
 }
 
 .cf_btn{

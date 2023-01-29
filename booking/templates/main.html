@@ -6,20 +6,20 @@
         {% for show in all_shows %}
         <div class="card" style="width: 1250px;">
             <div class="d-flex flex-row">
-                <div class="col-sm-3">
-                    <img class="card-img" src="/booking/static/images/DJI.JPG" alt="Movie image">
+                <div class="col-sm-2">
+                    <img class="card-img" src={{show.image}} alt="Movie image">
                 </div>
-                <div class="col-sm-6">
+                <div class="col">
                     <div class="card-body">
-                        <h5 class="card-title">Title</h5>
-                        <p class="card-text">Date</p>
-                        <p class="card-text">Time</p>
-                        <a href="#" class="btn btn-primary">View Profile</a>
+                        <h5 class="card-title">{{show.title}}</h5>
+                        <p class="card-text">{{show.date}}</p>
+                        <p class="card-text">{{show.time}}</p>
+                        <a href="#" class="btn btn-primary">Rezerwuj</a>
                     </div>
                 </div>
-                <div class="col-sm-5">
+                <div class="col">
                     <div class="card-body">
-                        <p class="card-text">Movie description</p>
+                        <p class="card-text">{{show.description}}</p>
                     </div>
                 </div>
             </div>

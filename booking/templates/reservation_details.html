@@ -1,12 +1,14 @@
 {% extends 'base_employee.html' %}
 
+
 {% block content %}
+{% include 'error.html' %}
+
 <h2 class="cf_title">Szczegóły rezerwacji</h2>
-    <form class="cf_form">
-    <input placeholder="wyszukaj rezerwacje">
-    <button class="res_btn">Szukaj</button>
-    <input type="button" onclick="location.href='/employee/reservations'" value="Powrót">
-    </form>
+<form class="cf_form" method="post" action="/employee/reservations">
+  <input placeholder="wyszukaj rezerwacje" name="res_id" type="number" required>
+  <input class="res_btn" type="submit" id="search" value="Szukaj">
+  </form>
     <div class="d-flex flex-row justify-content-around">
     <div class="cf_table">
           <table id="data" class="table table-striped">
@@ -20,10 +22,10 @@
             </thead>
             <tbody>
                 <tr>
-                  <td>numer</td>
-                  <td>dane</td>
-                  <td>status</td>
-                  <td>data</td>
+                  <td>{{numer}}</td>
+                  <td>{{dane}}</td>
+                  <td>{{status}}</td>
+                  <td>{{data}}</td>
                 </tr>
             </tbody>
           </table>
@@ -36,9 +38,9 @@
                     <div class="card-body">
                         <h5 class="card-title">Szczegóły rezerwacji</h5>
                         Numer telefonu: <br>
-                                Termin złożenia rezerwacji: <br>
-                                Termin ważności rezerwacji: <br>
-                                Liczba biletów: <br>
+                                Termin złożenia rezerwacji: {{data}}<br>
+                                Termin ważności rezerwacji: {{waznosc}}<br>
+                                Liczba biletów: {{liczba}}<br>
 
                     </div>
                 </div>
@@ -47,11 +49,11 @@
                         <h5 class="card-title">Status</h5>
                         <div class="fcf-form-group">
                             <div class="fcf-input-group">
-                                <form class="res_form">
-                                    <input type="checkbox" id="vehicle1" name="status" value="potwierdzona">
-                                  <label for="status">potwierdzona</label><br>
-                                  <input type="checkbox" id="vehicle2" name="status" value="anulowana">
-                                  <label for="status">anulowana</label><br>
+                                <form class="res_form"  action="{{ url_for('booking.employee_reservations_update', id=numer) }}" method="post">
+                                  <input type="radio" id="chbox1" name="status" value="Potwierdzona">
+                                  <label for="chbox1">potwierdzona</label><br>
+                                  <input type="radio" id="chbox2" name="status" value="Anulowana">
+                                  <label for="chbox2">anulowana</label><br>
                                   <input type="submit" value="Zatwierdź" class="res_btn">
                                 </form>
 

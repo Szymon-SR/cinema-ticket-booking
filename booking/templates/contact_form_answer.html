@@ -1,17 +1,19 @@
 {% extends 'base_employee.html' %}
 
+
 {% block content %}
+    {% include 'error.html' %}
     <div class="cf_main">
 
         <p>Nadawca:
-            <input placeholder="email" disabled class="cf_email">
+            <input placeholder={{email}} disabled class="cf_email">
            Data wysłania:
-            <input placeholder="date" disabled class="cf_date">
+            <input placeholder={{data}} disabled class="cf_date">
         </p>
-        <textarea placeholder="treść wiadomości" disabled class="cf_message"></textarea>
-        <form>
-        <textarea placeholder="treść odpowiedzi" class="cf_answer"></textarea>
-            <button type="submit" class="cf_btn">Wyślij</button>
+        <textarea placeholder={{tresc}} disabled class="cf_message" ></textarea>
+        <form action="{{ url_for('booking.employee_answer_send', id=numer) }}" method="post">
+        <textarea placeholder="treść odpowiedzi" class="cf_answer" name="odpowiedz" required></textarea>
+            <input type="submit" class="cf_btn" value="Wyślij">
         </form>
 
 

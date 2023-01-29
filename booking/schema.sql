@@ -96,7 +96,7 @@ CREATE TABLE Miejsce (
 );
 
 CREATE TABLE Formularz (
-    Id varchar(25) NOT NULL UNIQUE,
+    Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     Tresc varchar(1000) NOT NULL,
     TerminPrzeslania date NOT NULL,
     TerminOdpowiedzi date,
