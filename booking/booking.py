@@ -57,9 +57,10 @@ def contact():
     if request.method == "POST":
         form = request.form
 
-        add_contact_form_to_database(form.get("Message"), form.get("Email"))
-
-        return redirect("/")
+        if add_contact_form_to_database(form.get("Message"), form.get("Email")):
+            return redirect("/")
+        else:
+            return render_template("contact_form.html")
 
     return render_template("contact_form.html")
 
