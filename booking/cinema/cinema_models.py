@@ -10,7 +10,7 @@ from booking import Base
 from booking.employees.employee_models import Pracownik
 from booking.clients.client_models import Klient    
 
-
+# Base = declarative_base()
 metadata = Base.metadata
 
 class Sala(Base):

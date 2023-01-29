@@ -9,6 +9,7 @@ from booking.clients.client_models import Klient
 from booking.employees.employee_models import Pracownik
 from booking.cinema.cinema_models import Miejsce, Seans
 
+# Base = declarative_base()
 metadata = Base.metadata
 
 class Rezerwacja(Base):

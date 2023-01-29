@@ -3,7 +3,10 @@ from sqlalchemy import Column, Date, ForeignKey, ForeignKeyConstraint, Integer, 
 from sqlalchemy.sql.sqltypes import NullType
 from sqlalchemy.orm import relationship
 from booking import Base
+from sqlalchemy.ext.declarative import declarative_base
 
+
+# Base = declarative_base()
 metadata = Base.metadata
 
 class Klient(Base):

@@ -23,12 +23,18 @@ example_client_data = [
 
 example_employee_data = [
     {"id": 4, "login": "janowski_4", "haslo": "password", "imie": "Robert",
-        "nazwisko": "Janowski", "status": "aktywny", "telefon": "456 124 693", "czy_kierownik": 0}
+        "nazwisko": "Janowski", "status": "aktywny", "telefon": "456 124 693", "czy_kierownik": 0},
+    {"id": 2, "login": "admin", "haslo": "admin", "imie": "Anna",
+        "nazwisko": "Kowalska", "status": "aktywny", "telefon": "233 455 677", "czy_kierownik": 0}
 ]
 
 example_booking_data = [
     {"numer": "24", "status": "Potwierdzona", "termin_zlozenia": datetime.datetime.utcnow(
-    ), "termin_waznosci": datetime.datetime(2023, 1, 30), "klient_email": "jan.kowalski@pwr.edu.pl", "pracownik_id": 4}
+    ), "termin_waznosci": datetime.datetime(2023, 1, 30), "klient_email": "jan.kowalski@pwr.edu.pl", "pracownik_id": 4},
+    {"numer": "26", "status": "Anulowana", "termin_zlozenia": datetime.datetime.utcnow(
+    ), "termin_waznosci": datetime.datetime(2023, 1, 20), "klient_email": "anna.n@o2.pl", "pracownik_id": 2},
+    {"numer": "27", "status": "Potwierdzona", "termin_zlozenia": datetime.datetime.utcnow(
+    ), "termin_waznosci": datetime.datetime(2023, 1, 22), "klient_email": "jan.kowalski@pwr.edu.pl", "pracownik_id": 4}
 ]
 
 
