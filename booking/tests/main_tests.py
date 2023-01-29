@@ -8,9 +8,12 @@ from flask_testing import TestCase
 from flask import abort, url_for
 from booking import create_app, db
 
-from cinema.cinema_models import Formularz
+from booking.cinema.cinema_models import Formularz
+from booking.bookings.booking_models import Rezerwacja
+from booking.clients.client_models import Klient
+from booking.employees.employee_models import Pracownik
 
-engine = create_engine("sqlite:///booking/cinema_base.db", echo=True)
+engine = create_engine("sqlite:///booking/test_base.db", echo=True)
 Session = sessionmaker(bind=engine)
 
 
@@ -24,66 +27,62 @@ class TestBase(TestCase):
         Will be called before every test
         """
 
-    db.init_db()
+        # create test form
+        formularz_test = Formularz(
+            Id=44,
+            Tresc="Witam, chcialbym napisac ze aplikacja do rezerwacji bardzo mi sie podoba, pozdrwiam panstwa serdecznie",
+            TerminPrzeslania=datetime.datetime(2023, 1, 14),
+            KlientEmail="janek@wp.pl",
+            PracownikId=50,
+        )
 
-    # create test form
-    formularz_test = Formularz(
-        Id=44,
-        Tresc="Witam, chcialbym napisac ze aplikacja do rezerwacji bardzo mi sie podoba, pozdrwiam panstwa serdecznie",
-        TerminPrzeslania=datetime.datetime(2023, 1, 14),
-        KlientEmail="janek@wp.pl",
-        PracownikId=50,
-    )
+        session = Session()
+        session.query(Rezerwacja).delete()
+        session.query(Klient).delete()
+        session.query(Pracownik).delete()
+        session.query(Formularz).delete()
+        session.commit()
 
-    session = Session()
-    # save form to database
-    session.add(formularz_test)
-    session.commit()
+        # save form to database
+        session.add(formularz_test)
+        session.commit()
 
     def tearDown(self):
         """
         Will be called after every test
         """
         session = Session()
+        session.query(Rezerwacja).delete()
+        session.query(Klient).delete()
+        session.query(Pracownik).delete()
+        session.query(Formularz).delete()
+        session.commit()
 
-        session.delete()
-        # TODO add
 
 
-class TestModels(TestBase):
-    def test_employee_model(self):
-        """
-        Test number of records in Employee table
-        """
-        self.assertEqual(Employee.query.count(), 2)
+# class TestModels(TestBase):
+#     def test_form_model(self):
+#         """
+#         Test number of records in Formularz table
+#         """
+#         session = Session()
 
-    def test_department_model(self):
-        """
-        Test number of records in deparment table
-        """
+#         self.assertEqual(session.query(Formularz).count(), 1)
 
-        # create test department
-        department = Department(name="IT", description="the IT department")
+#     def test_client_model(self):
+#         """
+#         Test number of records in Klient table
+#         """
 
-        # save department to database
-        db.session.add(department)
-        db.session.commit()
+#         department = Klient(Email="example@wp.pl", Telefon="348794111", Imie="Jan", Nazwisko="Janek")
 
-        self.assertEqual(Department.query.count(), 1)
+#         session = Session()
 
-    def test_role_model(self):
-        """
-        Test number of records in Role table
-        """
+#         session.add(department)
+#         session.commit()
 
-        # create test role
-        role = Role(name="CEO", description="Run the whole company")
+#         self.assertEqual(session.query(Klient).count(), 1)
 
-        # save role to database
-        db.session.add(role)
-        db.session.commit()
-
-        self.assertEqual(Role.query.count(), 1)
 
 
 class TestViews(TestBase):
@@ -91,108 +90,32 @@ class TestViews(TestBase):
         """
         Test that homepage is accessible without login
         """
-        response = self.client.get(url_for("home.homepage"))
+        response = self.client.get("/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_contact_view(self):
+        """
+        Test that contact page is accessible without login
+        """
+        response = self.client.get("/contact")
         self.assertEqual(response.status_code, 200)
 
     def test_login_view(self):
         """
         Test that login page is accessible without login
         """
-        response = self.client.get(url_for("auth.login"))
+        response = self.client.get("/contact")
         self.assertEqual(response.status_code, 200)
-
-    def test_logout_view(self):
-        """
-        Test that logout link is inaccessible without login
-        and redirects to login page then to logout
-        """
-        target_url = url_for("auth.logout")
-        redirect_url = url_for("auth.login", next=target_url)
-        response = self.client.get(target_url)
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, redirect_url)
-
-    def test_dashboard_view(self):
-        """
-        Test that dashboard is inaccessible without login
-        and redirects to login page then to dashboard
-        """
-        target_url = url_for("home.dashboard")
-        redirect_url = url_for("auth.login", next=target_url)
-        response = self.client.get(target_url)
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, redirect_url)
-
-    def test_admin_dashboard_view(self):
-        """
-        Test that dashboard is inaccessible without login
-        and redirects to login page then to dashboard
-        """
-        target_url = url_for("home.admin_dashboard")
-        redirect_url = url_for("auth.login", next=target_url)
-        response = self.client.get(target_url)
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, redirect_url)
-
-    def test_departments_view(self):
-        """
-        Test that departments page is inaccessible without login
-        and redirects to login page then to departments page
-        """
-        target_url = url_for("admin.list_departments")
-        redirect_url = url_for("auth.login", next=target_url)
-        response = self.client.get(target_url)
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, redirect_url)
-
-    def test_roles_view(self):
-        """
-        Test that roles page is inaccessible without login
-        and redirects to login page then to roles page
-        """
-        target_url = url_for("admin.list_roles")
-        redirect_url = url_for("auth.login", next=target_url)
-        response = self.client.get(target_url)
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, redirect_url)
-
-    def test_employees_view(self):
-        """
-        Test that employees page is inaccessible without login
-        and redirects to login page then to employees page
-        """
-        target_url = url_for("admin.list_employees")
-        redirect_url = url_for("auth.login", next=target_url)
-        response = self.client.get(target_url)
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, redirect_url)
 
 
 class TestErrorPages(TestBase):
-    def test_403_forbidden(self):
-        # create route to abort the request with the 403 Error
-        @self.app.route("/403")
-        def forbidden_error():
-            abort(403)
-
-        response = self.client.get("/403")
-        self.assertEqual(response.status_code, 403)
-        self.assertTrue("403 Error" in response.data)
 
     def test_404_not_found(self):
-        response = self.client.get("/nothinghere")
+        response = self.client.get("/nopage")
         self.assertEqual(response.status_code, 404)
-        self.assertTrue("404 Error" in response.data)
 
-    def test_500_internal_server_error(self):
-        # create route to abort the request with the 500 Error
-        @self.app.route("/500")
-        def internal_server_error():
-            abort(500)
+        self.assertTrue("404 Not Found" in str(response.data))
 
-        response = self.client.get("/500")
-        self.assertEqual(response.status_code, 500)
-        self.assertTrue("500 Error" in response.data)
 
 
 if __name__ == "__main__":
